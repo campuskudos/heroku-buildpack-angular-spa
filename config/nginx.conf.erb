@@ -254,7 +254,7 @@ http {
       if ($prerender = 0) {
           add_header "Cache-Control" "no-cache, no-store, must-revalidate";
           add_header "Pragma" "no-cache";
-          add_header "Expires" "0";
+          add_header "Expires" "Tue, 31 Mar 1981 05:00:00 GMT";
           <% if ENV["NGINX_DEBUG"] %>add_header X-SPA-Base-Location on;<% end %>
           rewrite .* /index.html break;
       }
