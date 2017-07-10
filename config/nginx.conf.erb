@@ -86,6 +86,9 @@ http {
     <% end %>
 
     <% if ENV["API_URL"] %>
+      location = /api/census/RecordHit {}
+      location = /api/form/FormSubmissionKey {}
+
       location <%= ENV["API_PREFIX_PATH"] || "/api/" %> {
         proxy_pass <%= ENV["API_URL"] %>;
         proxy_set_header X-Real-IP $remote_addr;
@@ -96,9 +99,6 @@ http {
         proxy_redirect off;
         <% if ENV["NGINX_DEBUG"] %>add_header X-SPA-API-Proxy on;<% end %>
       }
-
-      location = /api/census/RecordHit {}
-      location = /api/form/FormSubmissionKey {}
     <% end %>
 
     <% if ENV["API_URL"] && ENV["SITEMAP_URL"] %>
