@@ -92,6 +92,9 @@ http {
       location /api/form/FormSubmissionKey {
         try_files $uri @squarespace;
       }
+      location /api/form/SaveFormSubmission {
+        try_files $uri @squarespace;
+      }
 
       location <%= ENV["API_PREFIX_PATH"] || "/api/" %> {
         proxy_pass <%= ENV["API_URL"] %>;
