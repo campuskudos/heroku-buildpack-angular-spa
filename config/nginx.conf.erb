@@ -96,6 +96,9 @@ http {
         proxy_redirect off;
         <% if ENV["NGINX_DEBUG"] %>add_header X-SPA-API-Proxy on;<% end %>
       }
+
+      location = /api/census/RecordHit {}
+      location = /api/form/FormSubmissionKey {}
     <% end %>
 
     <% if ENV["API_URL"] && ENV["SITEMAP_URL"] %>
