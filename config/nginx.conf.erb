@@ -86,8 +86,8 @@ http {
     <% end %>
 
     <% if ENV["API_URL"] %>
-      location = /api/census/RecordHit {}
-      location = /api/form/FormSubmissionKey {}
+      location /api/census/RecordHit {}
+      location /api/form/FormSubmissionKey {}
 
       location <%= ENV["API_PREFIX_PATH"] || "/api/" %> {
         proxy_pass <%= ENV["API_URL"] %>;
