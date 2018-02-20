@@ -57,6 +57,10 @@ http {
   default_type application/octet-stream;
   sendfile on;
 
+  upstream app_server {
+		server unix:/tmp/nginx.socket fail_timeout=0;
+  }
+
   server {
     listen <%= ENV["PORT"] || 80 %>;
     server_name _;
@@ -262,12 +266,16 @@ http {
           proxy_pass http://$prerender;
       }
       if ($prerender = 0) {
-          add_header "Cache-Control" "no-cache, no-store, must-revalidate";
-          add_header "Pragma" "no-cache";
-          add_header "Expires" "Tue, 31 Mar 1981 05:00:00 GMT";
-          add_header "Last-Modified" $date_gmt;
+          # add_header "Cache-Control" "no-cache, no-store, must-revalidate";
+          # add_header "Pragma" "no-cache";
+          # add_header "Expires" "Tue, 31 Mar 1981 05:00:00 GMT";
+          # add_header "Last-Modified" $date_gmt;
           <% if ENV["NGINX_DEBUG"] %>add_header X-SPA-Base-Location on;<% end %>
-          rewrite .* /index.html break;
+          # rewrite .* /index.html break;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header Host $http_host;
+          proxy_redirect off;
+          proxy_pass http://app_server;
       }
     }
 
